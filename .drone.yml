@@ -10,7 +10,7 @@ steps:
   - echo world
   
 - name: test
-  image: maven:3-jdk-10
+  image: maven:3-jdk-17
   commands:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
   - mvn test -B

@@ -3,7 +3,7 @@ type: docker
 name: default
 
 steps:
-- name: greeting ok
+- name: greeting ok 2
   image: alpine
   commands:
   - echo hello

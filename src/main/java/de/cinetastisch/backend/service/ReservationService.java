@@ -33,6 +33,7 @@ public class ReservationService {
     private final TicketMapper ticketMapper;
     private final OrderMapper orderMapper;
     private final ReferenceMapper referenceMapper;
+    private final TicketFareRepository ticketFareRepository;
 
     public List<TicketResponseDto> getAllReservations(Long userId, Long screeningId){
         ticketRepository.deleteAllByOrderStatusOrOrderExpiresAtIsLessThan(OrderStatus.CANCELLED, LocalDateTime.now());
@@ -72,6 +73,7 @@ public class ReservationService {
                 order = orderRepository.findByUserAndStatus(user, OrderStatus.IN_PROGRESS);
             } else {
                 order = new Order(user);
+                orderRepository.save(order);
             }
         } else {
             System.out.println("SESSION CREATION");
@@ -79,15 +81,16 @@ public class ReservationService {
                 order = orderRepository.findBySessionAndStatus(session.getId(), OrderStatus.IN_PROGRESS);
             } else {
                 order = new Order(session.getId());
+                orderRepository.save(order);
             }
         }
 
 
-        ticket = new Ticket(order, screening, seat);
+        ticket = new Ticket(order, screening, seat, ticketFareRepository.findByNameLikeIgnoreCase("Adult"));
         order.getTickets().add(ticket);
         ticketRepository.save(ticket);
         orderRepository.save(order);
-        return orderMapper.entityToDto(orderRepository.getReferenceById(order.getId()));
+        return orderMapper.entityToDto(referenceMapper.map(order.getId(), Order.class));
     }
 
     @Transactional

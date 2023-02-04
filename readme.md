@@ -2,9 +2,6 @@
 
  [![codecov](https://codecov.io/gh/mabu2807/cinema-backend/branch/main/graph/badge.svg)](https://codecov.io/gh/mabu2807/cinema-backend)
 
-
-Test
-
 ## Bi-direktionale vs Uni-direktionale Datenbankbeziehungen
 
 Als Notiz möchte ich hier vermerken, was der Unterschied zwischen eier **Bi-direktionalen** Datenbankbeziehung 

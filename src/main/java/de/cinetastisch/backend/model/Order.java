@@ -46,6 +46,7 @@ public class Order {
     private LocalDateTime expiresAt = this.createdAt.plusMinutes(5);
 
     @OneToMany(mappedBy = "order")
+    @OrderBy(value = "order.id, seat.id ASC")
     private List<Ticket> tickets = new ArrayList<>();
 
     public Order(User user) {
@@ -79,12 +80,7 @@ public class Order {
         if (this.status == OrderStatus.IN_PROGRESS){
             double newTotal = 0.0;
             for(Ticket t : this.tickets){
-                newTotal = switch (t.getCategory()) {
-                    case KID        -> newTotal + 8;
-                    case STUDENT    -> newTotal + 10;
-                    case ADULT      -> newTotal + 12;
-                    case PENSIONER  -> newTotal + 11;
-                };
+                newTotal += t.getSelectedFare().getPrice();
             }
             this.total = newTotal;
 

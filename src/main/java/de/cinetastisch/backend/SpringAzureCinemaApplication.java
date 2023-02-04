@@ -3,6 +3,7 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.servers.Server;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import net.kaczmarzyk.spring.data.jpa.swagger.springdoc.SpecificationArgResolverSpringdocOperationCustomizer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +24,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 				@Tag(name = "Reservations"),
 				@Tag(name = "Orders", description = "Weil die Order nicht nur auf den Ticketkauf spezialisiert ist, implementiert jedes eigene Produkt den Kauf"),
 				@Tag(name = "Tickets"),
-				@Tag(name = "Users")
+				@Tag(name = "Users"),
+				@Tag(name = "TicketFares")
 		}
 )
 @EnableScheduling
@@ -47,5 +49,10 @@ public class SpringAzureCinemaApplication {
 						.maxAge(3600);
 			}
 		};
+	}
+
+	@Bean
+	public SpecificationArgResolverSpringdocOperationCustomizer specificationArgResolverSpringdocOperationCustomizer() {
+		return new SpecificationArgResolverSpringdocOperationCustomizer();
 	}
 }

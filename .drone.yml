@@ -1,9 +1,16 @@
 kind: pipeline
+type: docker
 name: default
 
 steps:
+- name: greeting ok 2
+  image: alpine
+  commands:
+  - echo hello
+  - echo world
+  
 - name: test
-  image: maven:3-jdk-10
+  image: maven:3.8.7-sapmachine-17
   commands:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
   - mvn test -B
